@@ -1,0 +1,12 @@
+MicroProfile Config for Java SE
+
+Copyright 2022 by Rudy De Busscher
+
+------------------------------------------------------------------------
+See the file LICENSE
+------------------------------------------------------------------------
+
+Some classes or methods of this software were originally based on the following:
+* SmallRye config
+  https://github.com/smallrye/smallrye-config
+  under Apache License, v2.0
