@@ -15,30 +15,19 @@
  */
 package be.atbash.config.mp.util;
 
+import net.jadler.Jadler;
 import org.assertj.core.api.Assertions;
 import org.eclipse.microprofile.config.spi.ConfigSource;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-@ExtendWith(MockitoExtension.class)
 class ConfigSourceUtilTest {
-
-    @Mock
-    private URL urlMock;
-    // See mockito-extensions directory.
 
     @Test
     void propertiesToMap() {
@@ -85,17 +74,29 @@ class ConfigSourceUtilTest {
     }
 
     @Test
-    @Disabled
     void urlToMap() throws IOException {
-        // FIXME When using utils-se we do not use OpenStream
-        String data = "key=value\nruntime=Atbash";
-        InputStream dataStream = new ByteArrayInputStream(data.getBytes(StandardCharsets.UTF_8));
-        Mockito.when(urlMock.openStream()).thenReturn(dataStream);
+        Jadler.initJadler();
 
-        Map<String, String> map = ConfigSourceUtil.urlToMap(urlMock);
+        String data = "key=value\nruntime=Atbash";
+
+        Jadler.onRequest()
+                .havingMethodEqualTo("GET")
+                .havingPathEqualTo("/data")
+                .respond()
+                .withStatus(200)
+                .withHeader("Content-Type", "text/plain")
+                .withBody(data);
+
+        Map<String, String> map = ConfigSourceUtil.urlToMap(new URL("http://localhost:" + Jadler.port() + "/data"));
         Assertions.assertThat(map).hasSize(2);
 
         Assertions.assertThat(map).containsEntry("key", "value");
         Assertions.assertThat(map).containsEntry("runtime", "Atbash");
     }
+
+    @AfterEach
+    public void tearDown() {
+        Jadler.closeJadler();
+    }
+
 }
