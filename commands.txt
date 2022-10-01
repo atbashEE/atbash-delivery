@@ -24,4 +24,4 @@ mvn license:format
 mvn clean install
 
 # Setting versions
-mvn versions:set -DnewVersion=1.1.0 -DgenerateBackupPoms=false
+mvn versions:set -DnewVersion=1.0.1-SNAPSHOT -DgenerateBackupPoms=false
