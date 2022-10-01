@@ -17,6 +17,8 @@ package be.atbash.config.mp.sources;
 
 import be.atbash.util.resource.ResourceUtil;
 import org.eclipse.microprofile.config.spi.ConfigSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -53,6 +55,8 @@ import java.util.List;
  */
 public abstract class AbstractLocationConfigSourceLoader {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(AbstractLocationConfigSourceLoader.class);
+
     private final ResourceUtil resourceUtil = ResourceUtil.getInstance();
 
     /**
@@ -74,6 +78,9 @@ public abstract class AbstractLocationConfigSourceLoader {
         List<ConfigSource> configSources = new ArrayList<>();
         for (String location : locations) {
             List<URI> resources = resourceUtil.getResources(location);
+            if (!ConfigSources.META_INF_MICROPROFILE_CONFIG_PROPERTIES.equals(location) && resources.isEmpty()) {
+                LOGGER.warn(String.format("MPCONFIG-1005: Could not find resources for %s", location));
+            }
             for (URI resource : resources) {
                 ConfigSource mainSource = addConfigSource(resource, ordinal, configSources);
                 configSources.addAll(tryProfiles(resource, mainSource));

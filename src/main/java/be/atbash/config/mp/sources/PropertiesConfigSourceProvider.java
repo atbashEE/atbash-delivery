@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * FIXME Is this not just the same as PropertiesLocationConfigSourceFactory? At least, code can make use of the other class.
+ * This is a {@link ConfigSourceProvider} for getting a configSource for the specified location. This class
+ * cannot be used through ServiceLoader mechanism as it requires a constructor parameter.
+ * <p/>
  * based on code by Jeff Mesnil (c) 2017 Red Hat inc.
  */
 public class PropertiesConfigSourceProvider extends AbstractLocationConfigSourceLoader implements ConfigSourceProvider {

@@ -25,7 +25,6 @@ import org.eclipse.microprofile.config.spi.ConfigSourceProvider;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.logging.Logger;
 
 import static be.atbash.config.mp.sources.interceptor.ConfigSourceInterceptorFactory.DEFAULT_PRIORITY;
 
@@ -37,7 +36,6 @@ public class ConfigSources implements Serializable {
 
     public static final String META_INF_MICROPROFILE_CONFIG_PROPERTIES = "META-INF/microprofile-config.properties";
     public static final String ATBASH_CONFIG_LOCATIONS = "atbash.config.locations";
-    private static final Logger LOGGER = Logger.getLogger(ConfigSources.class.getName());
 
     private final List<ConfigSource> sources;
     private final ConfigSourceInterceptorContext interceptorChain;
@@ -150,7 +148,7 @@ public class ConfigSources implements Serializable {
         }
 
 
-        // TODO Is this needed, how can developers use this?
+        // TODO Documentation on how to use this type of ConfigSource provisioning.
         ServiceLoader<ConfigSourceFactory> configSourceFactoryLoader = ServiceLoader.load(ConfigSourceFactory.class);
         for (ConfigSourceFactory factory : configSourceFactoryLoader) {
             discoveredSources.add(new ConfigurableConfigSource(factory));
@@ -272,20 +270,8 @@ public class ConfigSources implements Serializable {
 
             });
 
-
-            if (configurableSource.getFactory() instanceof AbstractLocationConfigSourceFactory) {
-                countSourcesFromLocations = countSourcesFromLocations + configSources.size();
-            }
-
             for (ConfigSource configSource : configSources) {
                 sourcesWithPriority.add(new ConfigSourceWithPriority(configSource));
-            }
-        }
-
-        if (countSourcesFromLocations == 0 && addDiscoveredSources) {
-            ConfigValue locations = initChain.proceed(ATBASH_CONFIG_LOCATIONS);
-            if (locations != null && locations.getValue() != null) {
-                LOGGER.warning(String.format("MPCONFIG-1005: Could not find sources with %s in %s", ATBASH_CONFIG_LOCATIONS, locations.getValue()));
             }
         }
 
