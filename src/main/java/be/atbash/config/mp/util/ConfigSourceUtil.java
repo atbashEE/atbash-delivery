@@ -17,6 +17,8 @@ package be.atbash.config.mp.util;
 
 import be.atbash.util.resource.ResourceUtil;
 import org.eclipse.microprofile.config.spi.ConfigSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,16 +26,15 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 /**
  * utilities and constants for {@link ConfigSource} implementations
  * <p>
  * Based on code from SmallRye Config.
  */
-public class ConfigSourceUtil {
+public final class ConfigSourceUtil {
 
-    private static final Logger LOGGER = Logger.getLogger(ConfigSourceUtil.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigSourceUtil.class.getName());
 
     private ConfigSourceUtil() {
     }
@@ -80,7 +81,7 @@ public class ConfigSourceUtil {
         try {
             return ordStr == null ? defaultOrdinal : Integer.parseInt(ordStr);
         } catch (NumberFormatException e) {
-            LOGGER.warning(String.format("The property value for '%s' should be an integer but found '%s'", ConfigSource.CONFIG_ORDINAL, ordStr));
+            LOGGER.warn(String.format("The property value for '%s' should be an integer but found '%s'", ConfigSource.CONFIG_ORDINAL, ordStr));
             return defaultOrdinal;
         }
     }

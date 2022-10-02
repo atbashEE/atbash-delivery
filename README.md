@@ -1,3 +1,7 @@
+[![License](https://img.shields.io/:license-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/be.atbash/mp-config-se/badge.svg)](https://maven-badges.herokuapp.com/maven-central/be.atbash/mp-config-se)
+
 # MicroProfile Config for Java SE
 
 Base implementation of MicroProfile Config 3.x for use in plain Java SE (Java 11+).
@@ -19,3 +23,11 @@ Things that are explicitly not supported:
 - `@ConfigProperties`.
 
 However, these are supported within Atbash Runtime with the MP Config module.
+
+## Release notes
+
+### 1.0.1
+
+- Small code improvements
+- Use SLF4J everywhere for logging
+- Fix SNAPSHOT dependency

@@ -19,10 +19,11 @@ import be.atbash.config.mp.sources.ConfigSources;
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.spi.ConfigBuilder;
 import org.eclipse.microprofile.config.spi.ConfigProviderResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
 import java.util.stream.StreamSupport;
 
 /**
@@ -31,7 +32,7 @@ import java.util.stream.StreamSupport;
  * Based on code by Jeff Mesnil (Red Hat) and David M. Lloyd (Red Hat)
  */
 public class AtbashConfigProviderResolver extends ConfigProviderResolver {
-    private static final Logger LOGGER = Logger.getLogger(ConfigSources.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigSources.class.getName());
 
     private final Map<ClassLoader, Config> configsForClassLoader = new ConcurrentHashMap<>();
 
@@ -112,7 +113,7 @@ public class AtbashConfigProviderResolver extends ConfigProviderResolver {
                     try {
                         ((AutoCloseable) c).close();
                     } catch (Exception e) {
-                        LOGGER.warning(String.format("MPCONFIG-016: Failure when closing the Converter %s : %s", c.getClass().getName(), e.getLocalizedMessage()));
+                        LOGGER.warn(String.format("MPCONFIG-016: Failure when closing the Converter %s : %s", c.getClass().getName(), e.getLocalizedMessage()));
                         // ignore
                     }
                 });
@@ -126,7 +127,7 @@ public class AtbashConfigProviderResolver extends ConfigProviderResolver {
                     try {
                         ((AutoCloseable) c).close();
                     } catch (Exception e) {
-                        LOGGER.warning(String.format("MPCONFIG-018: Failure when closing the ConfigSource %s : %s", c.getClass().getName(), e.getLocalizedMessage()));
+                        LOGGER.warn(String.format("MPCONFIG-018: Failure when closing the ConfigSource %s : %s", c.getClass().getName(), e.getLocalizedMessage()));
 
                         // ignore
                     }
