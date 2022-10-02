@@ -48,7 +48,7 @@ public class ConfigSources implements Serializable {
     public ConfigSources(AtbashConfigBuilder builder) {
         // Add all sources (specified through the builder, the discovered and the default ones)
         // except for ConfigurableConfigSource types. These are initialized later.
-        List<ConfigSource> sources = buildSources(builder);
+        List<ConfigSource> sourcesFromBuilder = buildSources(builder);
 
         // Add all interceptors
         List<InterceptorWithPriority> interceptorWithPriorities = buildInterceptors(builder);
@@ -61,7 +61,7 @@ public class ConfigSources implements Serializable {
 
         // 2. An interceptor that is capable of retrieving the value from a ConfigSource.
 
-        List<ConfigSourceWithPriority> sourcesWithPriority = mapSources(sources);
+        List<ConfigSourceWithPriority> sourcesWithPriority = mapSources(sourcesFromBuilder);
         // ConfigSource with high priority should be considered first.
         sourcesWithPriority.sort(Collections.reverseOrder());
         current = new AtbashConfigSourceInterceptorContext(new ConfigValueRetrievalInterceptor(sourcesWithPriority), current);
@@ -77,7 +77,7 @@ public class ConfigSources implements Serializable {
 
         // Init all late sources
         List<String> profiles = getProfiles(interceptors);
-        List<ConfigSourceWithPriority> sourcesWithPriorities = mapLateSources(current, sources, profiles, builder.isAddDiscoveredSources());
+        List<ConfigSourceWithPriority> sourcesWithPriorities = mapLateSources(current, sourcesFromBuilder, profiles);
 
         // Rebuild the chain with the late sources and new instances of the interceptors
         // The new instance will ensure that we get rid of references to factories and other stuff and keep only
@@ -90,7 +90,7 @@ public class ConfigSources implements Serializable {
 
         // Adds the PropertyNamesConfigSourceInterceptor
         List<ConfigSource> configSources = getSources(sourcesWithPriorities);
-        ConfigSourceInterceptor propertyNamesInterceptor = createPropertyNamesInterceptor(sources, current);
+        ConfigSourceInterceptor propertyNamesInterceptor = createPropertyNamesInterceptor(sourcesFromBuilder, current);
         current = new AtbashConfigSourceInterceptorContext(propertyNamesInterceptor, current);
 
         this.sources = configSources;
@@ -240,8 +240,7 @@ public class ConfigSources implements Serializable {
 
     private List<ConfigSourceWithPriority> mapLateSources(AtbashConfigSourceInterceptorContext initChain
             , List<ConfigSource> sources
-            , List<String> profiles
-            , boolean addDiscoveredSources) {
+            , List<String> profiles) {
 
         ConfigSourceWithPriority.resetLoadPriority();
 
@@ -313,9 +312,9 @@ public class ConfigSources implements Serializable {
 
                 @Override
                 public OptionalInt getPriority() {
-                    OptionalInt priority = ConfigSourceInterceptorFactory.super.getPriority();
-                    if (priority.isPresent()) {
-                        return priority;
+                    OptionalInt parentPriority = ConfigSourceInterceptorFactory.super.getPriority();
+                    if (parentPriority.isPresent()) {
+                        return parentPriority;
                     }
 
                     return AnnotationUtil.getPriority(interceptor.getClass());

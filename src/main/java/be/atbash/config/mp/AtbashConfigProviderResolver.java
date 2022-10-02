@@ -55,15 +55,9 @@ public class AtbashConfigProviderResolver extends ConfigProviderResolver {
     @Override
     public Config getConfig(ClassLoader classLoader) {
         ClassLoader realClassLoader = getRealClassLoader(classLoader);
-        Config config = configsForClassLoader.get(realClassLoader);
-        if (config == null) {
-            synchronized (configsForClassLoader) {
-                config = configsForClassLoader.get(realClassLoader);
-                if (config == null) {
-                    config = getConfigFor(classLoader);
-                    configsForClassLoader.put(realClassLoader, config);
-                }
-            }
+        Config config;
+        synchronized (configsForClassLoader) {
+            config = configsForClassLoader.computeIfAbsent(realClassLoader, this::getConfigFor);
         }
         return config;
     }
@@ -102,10 +96,7 @@ public class AtbashConfigProviderResolver extends ConfigProviderResolver {
 
     @Override
     public void releaseConfig(Config config) {
-        // todo: see https://github.com/eclipse/microprofile-config/issues/136#issuecomment-535962313
-        // todo: see https://github.com/eclipse/microprofile-config/issues/471
-        Map<ClassLoader, Config> configsForClassLoader = this.configsForClassLoader;
-        synchronized (this.configsForClassLoader) {
+        synchronized (configsForClassLoader) {
             configsForClassLoader.values().removeIf(v -> v == config);
             closeConverterIfNeeded(config);
             closeConfigSourceIfNeeded(config);

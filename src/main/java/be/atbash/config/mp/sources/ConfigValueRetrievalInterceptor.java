@@ -28,14 +28,12 @@ import java.util.*;
  */
 public class ConfigValueRetrievalInterceptor implements ConfigSourceInterceptor {
 
-    private final List<ConfigValueConfigSource> configSources;
+    private final List<ConfigValueConfigSource> configSources = new ArrayList<>();
 
     public ConfigValueRetrievalInterceptor(List<ConfigSources.ConfigSourceWithPriority> configSourcesWithPriorities) {
-        List<ConfigValueConfigSource> configSources = new ArrayList<>();
         for (ConfigSources.ConfigSourceWithPriority configSource : configSourcesWithPriorities) {
             configSources.add(ConfigValueConfigSourceWrapper.wrap(configSource.getSource()));
         }
-        this.configSources = configSources;
     }
 
     @Override

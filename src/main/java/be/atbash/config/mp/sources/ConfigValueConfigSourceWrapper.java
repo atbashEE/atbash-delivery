@@ -19,14 +19,13 @@ import be.atbash.config.mp.ConfigValueImpl;
 import org.eclipse.microprofile.config.ConfigValue;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
 
 /**
  * Create a wrapper for {@link ConfigSource} as a  {@link ConfigValueConfigSource}.
  */
-class ConfigValueConfigSourceWrapper implements ConfigValueConfigSource, Serializable {
+class ConfigValueConfigSourceWrapper implements ConfigValueConfigSource {
 
     private final ConfigSource configSource;
 

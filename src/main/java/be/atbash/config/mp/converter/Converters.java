@@ -214,7 +214,9 @@ public final class Converters {
     }
 
     public static Class<?> wrapPrimitiveType(Class<?> primitiveType) {
-        assert primitiveType.isPrimitive();
+        if (!primitiveType.isPrimitive()) {
+            throw new IllegalArgumentException("Type must be a primitive " + primitiveType);
+        }
         return PRIMITIVE_TYPES.get(primitiveType);
     }
 
@@ -353,7 +355,7 @@ public final class Converters {
     static final class CollectionConverter<T, C extends Collection<T>> extends AbstractDelegatingConverter<T, C> {
         private static final long serialVersionUID = -8452214026800305628L;
 
-        private final IntFunction<C> collectionFactory;
+        private transient final IntFunction<C> collectionFactory;
 
         CollectionConverter(Converter<? extends T> delegate, IntFunction<C> collectionFactory) {
             super(delegate);
@@ -382,7 +384,7 @@ public final class Converters {
     static final class ArrayConverter<T, A> extends AbstractDelegatingConverter<T, A> {
         private static final long serialVersionUID = 2630282286159527380L;
 
-        private final Class<A> arrayType;
+        private transient final Class<A> arrayType;
 
         ArrayConverter(Converter<? extends T> delegate, Class<A> arrayType) {
             super(delegate);
@@ -405,7 +407,10 @@ public final class Converters {
                     }
                 }
             }
-            return size == 0 ? null : size < itemStrings.length ? copyArray(array, arrayType, size) : array;
+            if (size == 0) {
+                return null;
+            }
+            return size < itemStrings.length ? copyArray(array, arrayType, size) : array;
         }
 
         private static <A> A copyArray(A array, Class<A> arrayType, int newSize) {

@@ -18,7 +18,6 @@ package be.atbash.config.mp.sources.interceptor;
 import org.eclipse.microprofile.config.ConfigValue;
 import org.eclipse.microprofile.config.spi.ConfigSource;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Iterator;
 
@@ -50,7 +49,7 @@ import java.util.Iterator;
  * of {@code be.atbash.runtime.config.mp.sources.interceptor.Priorities#APPLICATION} is assumed. If multiple interceptors are registered with the
  * same priority, then their execution order may be non-deterministic.
  */
-public interface ConfigSourceInterceptor extends Serializable {
+public interface ConfigSourceInterceptor {
     /**
      * Intercept the resolution of a configuration name and either return the corresponding {@link ConfigValue} or a
      * custom {@link ConfigValue} built by the interceptor. Calling

@@ -15,8 +15,8 @@
  */
 package be.atbash.config.mp;
 
-import be.atbash.config.mp.sources.ConfigSources;
 import be.atbash.config.mp.converter.Converters;
+import be.atbash.config.mp.sources.ConfigSources;
 import be.atbash.config.mp.util.AnnotationUtil;
 import org.eclipse.microprofile.config.spi.ConfigBuilder;
 import org.eclipse.microprofile.config.spi.ConfigSource;
@@ -169,12 +169,12 @@ public class AtbashConfigBuilder implements ConfigBuilder {
             }
         }
 
-        ConcurrentHashMap<Type, Converter<?>> converters = new ConcurrentHashMap<>(Converters.ALL_CONVERTERS);
+        ConcurrentHashMap<Type, Converter<?>> allConverters = new ConcurrentHashMap<>(Converters.ALL_CONVERTERS);
         for (Map.Entry<Type, ConverterWithPriority> entry : convertersToBuild.entrySet()) {
-            converters.put(entry.getKey(), entry.getValue().getConverter());
+            allConverters.put(entry.getKey(), entry.getValue().getConverter());
         }
 
-        return converters;
+        return allConverters;
     }
 
     private List<Converter<?>> discoverConverters() {
@@ -188,8 +188,8 @@ public class AtbashConfigBuilder implements ConfigBuilder {
 
     @Override
     public AtbashConfig build() {
-        Map<Type, Converter<?>> converters = buildConverters();
-        return new AtbashConfig(this, converters);
+        Map<Type, Converter<?>> allConverters = buildConverters();
+        return new AtbashConfig(this, allConverters);
     }
 
     static class ConverterWithPriority {

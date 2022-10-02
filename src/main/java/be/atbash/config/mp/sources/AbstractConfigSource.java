@@ -27,7 +27,7 @@ public abstract class AbstractConfigSource implements ConfigSource, Serializable
     private final int ordinal;
     private final String name;
 
-    public AbstractConfigSource(String name, int ordinal) {
+    protected AbstractConfigSource(String name, int ordinal) {
         this.name = name;
         this.ordinal = ordinal;
     }

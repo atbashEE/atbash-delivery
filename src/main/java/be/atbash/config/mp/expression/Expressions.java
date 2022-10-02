@@ -15,7 +15,10 @@
  */
 package be.atbash.config.mp.expression;
 
-public class Expressions {
+public final class Expressions {
+
+    private Expressions() {
+    }
 
     public static CompositeNode parseExpression(String text) {
         CompositeNode result = new CompositeNode();

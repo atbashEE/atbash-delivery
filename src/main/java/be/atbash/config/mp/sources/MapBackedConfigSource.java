@@ -36,7 +36,7 @@ public abstract class MapBackedConfigSource extends AbstractConfigSource {
      * @param propertyMap    the map to use
      * @param defaultOrdinal the default ordinal to use if one is not given in the map
      */
-    public MapBackedConfigSource(String name, Map<String, String> propertyMap, int defaultOrdinal) {
+    protected MapBackedConfigSource(String name, Map<String, String> propertyMap, int defaultOrdinal) {
         super(name, ConfigSourceUtil.getOrdinalFromMap(propertyMap, defaultOrdinal));
         properties = Collections.unmodifiableMap(propertyMap);
     }
