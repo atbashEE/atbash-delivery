@@ -100,7 +100,7 @@ public class ImplicitConverters {
         private static final long serialVersionUID = 3350265927359848883L;
 
         private final Class<? extends T> clazz;
-        private transient final Method method;
+        private final transient Method method;
 
         StaticMethodConverter(Class<? extends T> clazz, Method method) {
             assert clazz == method.getReturnType();
@@ -143,9 +143,9 @@ public class ImplicitConverters {
     static class ConstructorConverter<T> implements Converter<T>, Serializable {
 
 
-        private transient final Constructor<? extends T> ctor;
+        private final transient Constructor<? extends T> ctor;
 
-        public ConstructorConverter(final Constructor<? extends T> ctor) {
+        public ConstructorConverter(Constructor<? extends T> ctor) {
             this.ctor = ctor;
         }
 

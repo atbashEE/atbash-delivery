@@ -43,10 +43,9 @@ import java.util.Set;
  * If <code>foo-bar</code> is present and <code>FOO_BAR</code> is also present, no additional property is required.
  * If <code>FOO_BAR</code> is present an additional property <code>foo.bar</code> is added.
  * <p/>
- * Based on code fro mSmallRye Config.
+ * Based on code from SmallRye Config.
  */
 public class PropertyNamesConfigSourceInterceptor implements ConfigSourceInterceptor {
-    private static final long serialVersionUID = 5263983885197566053L;
 
     private final Set<String> dottedProperties = new HashSet<>();
 
@@ -76,12 +75,12 @@ public class PropertyNamesConfigSourceInterceptor implements ConfigSourceInterce
     }
 
     @Override
-    public ConfigValue getValue(final ConfigSourceInterceptorContext context, final String name) {
+    public ConfigValue getValue(ConfigSourceInterceptorContext context, final String name) {
         return context.proceed(name);
     }
 
     @Override
-    public Iterator<String> iterateNames(final ConfigSourceInterceptorContext context) {
+    public Iterator<String> iterateNames(ConfigSourceInterceptorContext context) {
         Set<String> names = new HashSet<>();
         Iterator<String> namesIterator = context.iterateNames();
         while (namesIterator.hasNext()) {

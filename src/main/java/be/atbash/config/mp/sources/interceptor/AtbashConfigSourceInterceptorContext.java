@@ -25,7 +25,7 @@ import java.util.Iterator;
 public class AtbashConfigSourceInterceptorContext implements ConfigSourceInterceptorContext {
     private static final long serialVersionUID = 6654406739008729337L;
 
-    private final ConfigSourceInterceptor interceptor;
+    private final transient ConfigSourceInterceptor interceptor;
     private final ConfigSourceInterceptorContext next;
 
     public AtbashConfigSourceInterceptorContext(ConfigSourceInterceptor interceptor, ConfigSourceInterceptorContext next) {

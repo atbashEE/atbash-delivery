@@ -57,7 +57,7 @@ class ConvertersTest {
 
     @Test
     void booleanConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Boolean.class).convert("TRUE");
+        Object converted = Converters.getAllConverters().get(Boolean.class).convert("TRUE");
         Assertions.assertThat(converted).isInstanceOf(Boolean.class);
         Assertions.assertThat((Boolean) converted).isTrue();
     }
@@ -65,14 +65,14 @@ class ConvertersTest {
     @Test
     void booleanConverter_spacesLowercase() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(Boolean.class).convert("  true  ");
+        Object converted = Converters.getAllConverters().get(Boolean.class).convert("  true  ");
         Assertions.assertThat(converted).isInstanceOf(Boolean.class);
         Assertions.assertThat((Boolean) converted).isTrue();
     }
 
     @Test
     void doubleConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Double.class).convert("1234.56");
+        Object converted = Converters.getAllConverters().get(Double.class).convert("1234.56");
         Assertions.assertThat(converted).isInstanceOf(Double.class);
         Assertions.assertThat((Double) converted).isCloseTo(1234.56, Offset.offset(0.001));
     }
@@ -80,7 +80,7 @@ class ConvertersTest {
     @Test
     void doubleConverter_spaces() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(Double.class).convert("  65.4321  ");
+        Object converted = Converters.getAllConverters().get(Double.class).convert("  65.4321  ");
         Assertions.assertThat(converted).isInstanceOf(Double.class);
         Assertions.assertThat((Double) converted).isCloseTo(65.4321, Offset.offset(0.00001));
     }
@@ -88,14 +88,14 @@ class ConvertersTest {
     @Test
     void doubleConverter_incorrectFormat() {
         NumberFormatException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Double.class).convert("1234D.56")
+                () -> Converters.getAllConverters().get(Double.class).convert("1234D.56")
                 , NumberFormatException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-131: Expected a double value, got '1234D.56'");
     }
 
     @Test
     void floatConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Float.class).convert("1234.56");
+        Object converted = Converters.getAllConverters().get(Float.class).convert("1234.56");
         Assertions.assertThat(converted).isInstanceOf(Float.class);
         Assertions.assertThat((Float) converted).isCloseTo(1234.56F, Offset.offset(0.001F));
     }
@@ -103,7 +103,7 @@ class ConvertersTest {
     @Test
     void floatConverter_spaces() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(Float.class).convert("  65.4321  ");
+        Object converted = Converters.getAllConverters().get(Float.class).convert("  65.4321  ");
         Assertions.assertThat(converted).isInstanceOf(Float.class);
         Assertions.assertThat((Float) converted).isCloseTo(65.4321F, Offset.offset(0.00001F));
     }
@@ -111,14 +111,14 @@ class ConvertersTest {
     @Test
     void floatConverter_incorrectFormat() {
         NumberFormatException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Float.class).convert("1234D.56")
+                () -> Converters.getAllConverters().get(Float.class).convert("1234D.56")
                 , NumberFormatException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-132: Expected a float value, got '1234D.56'");
     }
 
     @Test
     void longConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Long.class).convert("1234567890");
+        Object converted = Converters.getAllConverters().get(Long.class).convert("1234567890");
         Assertions.assertThat(converted).isInstanceOf(Long.class);
         Assertions.assertThat((Long) converted).isEqualTo(1234567890L);
     }
@@ -126,7 +126,7 @@ class ConvertersTest {
     @Test
     void longConverter_spaces() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(Long.class).convert("  1234567890  ");
+        Object converted = Converters.getAllConverters().get(Long.class).convert("  1234567890  ");
         Assertions.assertThat(converted).isInstanceOf(Long.class);
         Assertions.assertThat((Long) converted).isEqualTo(1234567890L);
     }
@@ -134,7 +134,7 @@ class ConvertersTest {
     @Test
     void longConverter_incorrectFormat() {
         NumberFormatException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Long.class).convert("1234.5")
+                () -> Converters.getAllConverters().get(Long.class).convert("1234.5")
                 , NumberFormatException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-130: Expected a long value, got '1234.5'");
     }
@@ -142,7 +142,7 @@ class ConvertersTest {
 
     @Test
     void integerConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Integer.class).convert("-123");
+        Object converted = Converters.getAllConverters().get(Integer.class).convert("-123");
         Assertions.assertThat(converted).isInstanceOf(Integer.class);
         Assertions.assertThat((Integer) converted).isEqualTo(-123);
     }
@@ -150,7 +150,7 @@ class ConvertersTest {
     @Test
     void integerConverter_spaces() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(Integer.class).convert("  -123  ");
+        Object converted = Converters.getAllConverters().get(Integer.class).convert("  -123  ");
         Assertions.assertThat(converted).isInstanceOf(Integer.class);
         Assertions.assertThat((Integer) converted).isEqualTo(-123);
     }
@@ -158,7 +158,7 @@ class ConvertersTest {
     @Test
     void integerConverter_incorrectFormat() {
         NumberFormatException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Integer.class).convert("1234.5")
+                () -> Converters.getAllConverters().get(Integer.class).convert("1234.5")
                 , NumberFormatException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-129: Expected a integer value, got '1234.5'");
     }
@@ -166,7 +166,7 @@ class ConvertersTest {
 
     @Test
     void classConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Class.class).convert(SomeClass.class.getName());
+        Object converted = Converters.getAllConverters().get(Class.class).convert(SomeClass.class.getName());
         Assertions.assertThat(converted).isInstanceOf(Class.class);
 
         Assertions.assertThat((Class<?>) converted).isEqualTo(SomeClass.class);
@@ -176,7 +176,7 @@ class ConvertersTest {
     @Test
     void classConverter_unknown() {
         IllegalArgumentException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Class.class).convert("some.random.class.name")
+                () -> Converters.getAllConverters().get(Class.class).convert("some.random.class.name")
                 , IllegalArgumentException.class);
 
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-121: Converter did not find class 'some.random.class.name'");
@@ -184,7 +184,7 @@ class ConvertersTest {
 
     @Test
     void inetAddressConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(InetAddress.class).convert("localhost");
+        Object converted = Converters.getAllConverters().get(InetAddress.class).convert("localhost");
         Assertions.assertThat(converted).isInstanceOf(InetAddress.class);
 
         InetAddress address = (InetAddress) converted;
@@ -196,7 +196,7 @@ class ConvertersTest {
     void inetAddressConverter_unknown() {
 
         IllegalArgumentException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(InetAddress.class).convert("AtbashServer")
+                () -> Converters.getAllConverters().get(InetAddress.class).convert("AtbashServer")
                 , IllegalArgumentException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-122: Host 'AtbashServer' not found");
     }
@@ -204,7 +204,7 @@ class ConvertersTest {
     @Test
     void inetAddressConverter_empty() {
 
-        Object converted = Converters.ALL_CONVERTERS.get(InetAddress.class).convert("");
+        Object converted = Converters.getAllConverters().get(InetAddress.class).convert("");
         Assertions.assertThat(converted).isNull();
 
 
@@ -212,7 +212,7 @@ class ConvertersTest {
 
     @Test
     void characterConverter() {
-        Object converted = Converters.ALL_CONVERTERS.get(Character.class).convert("A");
+        Object converted = Converters.getAllConverters().get(Character.class).convert("A");
         Assertions.assertThat(converted).isInstanceOf(Character.class);
 
         Assertions.assertThat((Character) converted).isEqualTo('A');
@@ -222,7 +222,7 @@ class ConvertersTest {
     @Test
     void characterConverter_incorrect() {
         IllegalArgumentException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(Character.class).convert("Atbash")
+                () -> Converters.getAllConverters().get(Character.class).convert("Atbash")
                 , IllegalArgumentException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-003: 'Atbash' can not be converted to a Character");
 
@@ -230,7 +230,7 @@ class ConvertersTest {
 
     @Test
     void characterConverter_emptyValue() {
-        Object converted = Converters.ALL_CONVERTERS.get(Character.class).convert("");
+        Object converted = Converters.getAllConverters().get(Character.class).convert("");
         Assertions.assertThat(converted).isNull();
 
     }
@@ -238,7 +238,7 @@ class ConvertersTest {
     @Test
     void uuidConverter() {
         UUID uuid = UUID.randomUUID();
-        Object converted = Converters.ALL_CONVERTERS.get(UUID.class).convert(uuid.toString());
+        Object converted = Converters.getAllConverters().get(UUID.class).convert(uuid.toString());
         Assertions.assertThat(converted).isInstanceOf(UUID.class);
 
         Assertions.assertThat(converted.toString()).isEqualTo(uuid.toString());
@@ -248,7 +248,7 @@ class ConvertersTest {
     @Test
     void uuidConverter_incorrectValue() {
         IllegalArgumentException thrownException = Assertions.catchThrowableOfType(
-                () -> Converters.ALL_CONVERTERS.get(UUID.class).convert("something that is not UUID")
+                () -> Converters.getAllConverters().get(UUID.class).convert("something that is not UUID")
                 , IllegalArgumentException.class);
         Assertions.assertThat(thrownException.getMessage()).isEqualTo("MPCONFIG-026: 'something that is not UUID' cannot be converted into a UUID");
 

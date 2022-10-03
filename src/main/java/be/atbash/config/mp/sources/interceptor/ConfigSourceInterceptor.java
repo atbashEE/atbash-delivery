@@ -79,12 +79,12 @@ public interface ConfigSourceInterceptor {
     ConfigSourceInterceptor EMPTY = new ConfigSourceInterceptor() {
 
         @Override
-        public ConfigValue getValue(final ConfigSourceInterceptorContext context, final String name) {
+        public ConfigValue getValue(ConfigSourceInterceptorContext context, final String name) {
             return null;
         }
 
         @Override
-        public Iterator<String> iterateNames(final ConfigSourceInterceptorContext context) {
+        public Iterator<String> iterateNames(ConfigSourceInterceptorContext context) {
             return Collections.emptyIterator();
         }
 

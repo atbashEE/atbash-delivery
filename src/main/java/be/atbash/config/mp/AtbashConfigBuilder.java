@@ -169,7 +169,7 @@ public class AtbashConfigBuilder implements ConfigBuilder {
             }
         }
 
-        ConcurrentHashMap<Type, Converter<?>> allConverters = new ConcurrentHashMap<>(Converters.ALL_CONVERTERS);
+        ConcurrentHashMap<Type, Converter<?>> allConverters = new ConcurrentHashMap<>(Converters.getAllConverters());
         for (Map.Entry<Type, ConverterWithPriority> entry : convertersToBuild.entrySet()) {
             allConverters.put(entry.getKey(), entry.getValue().getConverter());
         }

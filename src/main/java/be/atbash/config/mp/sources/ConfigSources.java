@@ -229,8 +229,8 @@ public class ConfigSources implements Serializable {
         return sourcesWithPriority;
     }
 
-    private List<String> getProfiles(final List<ConfigSourceInterceptor> interceptors) {
-        for (final ConfigSourceInterceptor interceptor : interceptors) {
+    private List<String> getProfiles(List<ConfigSourceInterceptor> interceptors) {
+        for (ConfigSourceInterceptor interceptor : interceptors) {
             if (interceptor instanceof ProfileConfigSourceInterceptor) {
                 return Arrays.asList(((ProfileConfigSourceInterceptor) interceptor).getProfiles());
             }
@@ -252,12 +252,11 @@ public class ConfigSources implements Serializable {
         }
         lateSources.sort(Comparator.comparingInt(ConfigurableConfigSource::getOrdinal));
 
-        int countSourcesFromLocations = 0;
         List<ConfigSourceWithPriority> sourcesWithPriority = new ArrayList<>();
         for (ConfigurableConfigSource configurableSource : lateSources) {
             final List<ConfigSource> configSources = configurableSource.getConfigSources(new ConfigSourceContext() {
                 @Override
-                public ConfigValue getValue(final String name) {
+                public ConfigValue getValue(String name) {
                     ConfigValue value = initChain.proceed(name);
                     return value != null ? value : ConfigValueImpl.builder().withName(name).build();
                 }
@@ -280,7 +279,7 @@ public class ConfigSources implements Serializable {
         return sourcesWithPriority;
     }
 
-    private List<ConfigSource> getSources(final List<ConfigSourceWithPriority> sourceWithPriorities) {
+    private List<ConfigSource> getSources(List<ConfigSourceWithPriority> sourceWithPriorities) {
         final List<ConfigSource> configSources = new ArrayList<>();
         for (ConfigSourceWithPriority configSourceWithPriority : sourceWithPriorities) {
             configSources.add(configSourceWithPriority.getSource());
@@ -332,7 +331,7 @@ public class ConfigSources implements Serializable {
         }
 
         @Override
-        public int compareTo(final InterceptorWithPriority other) {
+        public int compareTo(InterceptorWithPriority other) {
             return Integer.compare(this.priority, other.priority);
         }
     }
@@ -343,7 +342,7 @@ public class ConfigSources implements Serializable {
         private final int priority;
         private final int loadPriority = loadPrioritySequence++;
 
-        ConfigSourceWithPriority(final ConfigSource source) {
+        ConfigSourceWithPriority(ConfigSource source) {
             this.source = source;
             this.priority = source.getOrdinal();
         }
@@ -353,7 +352,7 @@ public class ConfigSources implements Serializable {
         }
 
         @Override
-        public int compareTo(final ConfigSourceWithPriority other) {
+        public int compareTo(ConfigSourceWithPriority other) {
             int res = Integer.compare(this.priority, other.priority);
             return res != 0 ? res : Integer.compare(other.loadPriority, this.loadPriority);
         }

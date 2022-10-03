@@ -40,7 +40,7 @@ public class ConfigurableConfigSource implements ConfigSource {
     }
 
     @Override
-    public String getValue(final String propertyName) {
+    public String getValue(String propertyName) {
         return null;
     }
 

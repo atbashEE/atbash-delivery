@@ -73,7 +73,7 @@ public class ProfileConfigSourceInterceptor implements ConfigSourceInterceptor {
     }
 
     @Override
-    public Iterator<String> iterateNames(final ConfigSourceInterceptorContext context) {
+    public Iterator<String> iterateNames(ConfigSourceInterceptorContext context) {
         final Set<String> names = new HashSet<>();
         final Iterator<String> namesIterator = context.iterateNames();
         while (namesIterator.hasNext()) {

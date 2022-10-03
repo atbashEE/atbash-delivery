@@ -134,7 +134,7 @@ public final class Converters {
             newTrimmingConverter(newEmptyValueConverter(Byte::valueOf)));
 
     static final Converter<UUID> UUID_CONVERTER = BuiltInConverter.of(14,
-            newTrimmingConverter(newEmptyValueConverter((s) -> {
+            newTrimmingConverter(newEmptyValueConverter(s -> {
                 try {
                     return UUID.fromString(s);
                 } catch (IllegalArgumentException e) {
@@ -146,7 +146,7 @@ public final class Converters {
             newTrimmingConverter(newEmptyValueConverter(Currency::getInstance)));
 
     static final Converter<BitSet> BITSET_CONVERTER = BuiltInConverter.of(16,
-            newTrimmingConverter((s) -> {
+            newTrimmingConverter(s -> {
                 int len = s.length();
                 byte[] data = new byte[len / 2];
                 for (int i = 0; i < len; i += 2) {
@@ -159,9 +159,13 @@ public final class Converters {
     static final Converter<Pattern> PATTERN_CONVERTER = BuiltInConverter.of(17,
             newTrimmingConverter(newEmptyValueConverter(Pattern::compile)));
 
-    public static final Map<Class<?>, Class<?>> PRIMITIVE_TYPES;
+    private static final Map<Class<?>, Class<?>> PRIMITIVE_TYPES;
 
-    public static final Map<Type, Converter<?>> ALL_CONVERTERS = new HashMap<>();
+    private static final Map<Type, Converter<?>> ALL_CONVERTERS = new HashMap<>();
+
+    public static Map<Type, Converter<?>> getAllConverters() {
+        return new HashMap<>(ALL_CONVERTERS);
+    }
 
     static {
         ALL_CONVERTERS.put(String.class, STRING_CONVERTER);
@@ -355,7 +359,7 @@ public final class Converters {
     static final class CollectionConverter<T, C extends Collection<T>> extends AbstractDelegatingConverter<T, C> {
         private static final long serialVersionUID = -8452214026800305628L;
 
-        private transient final IntFunction<C> collectionFactory;
+        private final transient IntFunction<C> collectionFactory;
 
         CollectionConverter(Converter<? extends T> delegate, IntFunction<C> collectionFactory) {
             super(delegate);
@@ -384,7 +388,7 @@ public final class Converters {
     static final class ArrayConverter<T, A> extends AbstractDelegatingConverter<T, A> {
         private static final long serialVersionUID = 2630282286159527380L;
 
-        private transient final Class<A> arrayType;
+        private final transient Class<A> arrayType;
 
         ArrayConverter(Converter<? extends T> delegate, Class<A> arrayType) {
             super(delegate);
