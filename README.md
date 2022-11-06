@@ -2,9 +2,17 @@
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/be.atbash/mp-config-se/badge.svg)](https://maven-badges.herokuapp.com/maven-central/be.atbash/mp-config-se)
 
-# MicroProfile Config for Java SE
+# Atbash Delivery (MicroProfile Config for Java SE)
 
 Base implementation of MicroProfile Config 3.x for use in plain Java SE (Java 11+).
+
+The inital 1.0.1 release is available as (as it was done before name was officially assigned)
+
+```
+    <groupId>be.atbash</groupId>
+    <artifactId>mp-config-se</artifactId>
+    <version>1.0.1</version>
+```
 
 ## Supported
 
