@@ -22,8 +22,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>be.atbash</groupId>
-    <artifactId>mp-config-se</artifactId>
-    <version>1.0.1</version>
+    <artifactId>atbash-delivery</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -34,10 +34,10 @@
         <mockito.version>4.8.0</mockito.version>
     </properties>
 
-    <name>Atbash MicroProfile Config for Java SE</name>
+    <name>Atbash Delivery (MicroProfile Config for Java SE)</name>
     <inceptionYear>2022</inceptionYear>
-    <description>MP Config for SE</description>
-    <url>https://github.com/atbashEE/mp-config-se</url>
+    <description>Atbash-delivery</description>
+    <url>https://github.com/atbashEE/atbash-delivery</url>
 
     <developers>
         <developer>
@@ -60,9 +60,9 @@
 
 
     <scm>
-        <connection>scm:git:git://github.com/atbashEE/mp-config-se.git</connection>
-        <developerConnection>scm:git:ssh://github.com:atbashEE/mp-config-se.git</developerConnection>
-        <url>https://github.com/atbashEE/mp-config-se/tree/main</url>
+        <connection>scm:git:git://github.com/atbashEE/atbash-delivery.git</connection>
+        <developerConnection>scm:git:ssh://github.com:atbashEE/atbash-delivery.git</developerConnection>
+        <url>https://github.com/atbashEE/atbash-delivery/tree/main</url>
     </scm>
 
     <dependencyManagement>

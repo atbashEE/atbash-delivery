@@ -6,7 +6,7 @@
 
 Base implementation of MicroProfile Config 3.x for use in plain Java SE (Java 11+).
 
-The inital 1.0.1 release is available as (as it was done before name was officially assigned)
+The initial 1.0.1 release is available as (as it was done before name was officially assigned)
 
 ```
     <groupId>be.atbash</groupId>
